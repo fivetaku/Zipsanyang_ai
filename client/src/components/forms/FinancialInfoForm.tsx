@@ -33,10 +33,7 @@ export default function FinancialInfoForm({ onSubmit }: FinancialInfoFormProps) 
     const cleanCash = cash.replace(/[^0-9.]/g, ''); // Keep numbers and decimal point
     
     // Construct message to send to chat
-    const message = `매매 목적: ${purpose === 'residence' ? '실거주' : '갭투자'}
-연봉: ${cleanSalary}만원
-보유 현금: ${cleanCash}억원
-출퇴근 지역: ${workLocation}
+    const message = `매매 목적: ${purpose === 'residence' ? '실거주' : '갭투자'} / 연봉: ${cleanSalary}만원 / 보유 현금: ${cleanCash}억원 / 출퇴근 지역: ${workLocation}
 
 이 조건으로 아파트를 추천해주세요!`;
 
