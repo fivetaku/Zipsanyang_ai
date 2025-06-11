@@ -22,17 +22,32 @@ export default function FinancialInfoForm({ onSubmit }: FinancialInfoFormProps) 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate inputs
+    if (!purpose || !salary || !cash || !workLocation) {
+      alert('모든 필드를 입력해주세요.');
+      return;
+    }
+    
+    // Clean and format the input values
+    const cleanSalary = salary.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+    const cleanCash = cash.replace(/[^0-9.]/g, ''); // Keep numbers and decimal point
+    
     // Construct message to send to chat
     const message = `매매 목적: ${purpose === 'residence' ? '실거주' : '갭투자'}
-연봉: ${salary}만원
-보유 현금: ${cash}억원
+연봉: ${cleanSalary}만원
+보유 현금: ${cleanCash}억원
 출퇴근 지역: ${workLocation}
 
 이 조건으로 아파트를 추천해주세요!`;
 
     // Trigger parent's message sending function
     if (onSubmit) {
-      onSubmit({ purpose, salary, cash, workLocation });
+      onSubmit({ 
+        purpose, 
+        salary: cleanSalary, 
+        cash: cleanCash, 
+        workLocation 
+      });
     } else {
       // If no onSubmit provided, simulate clicking send button
       const chatInput = document.querySelector('input[placeholder*="집사 냥"]') as HTMLInputElement;
@@ -75,10 +90,11 @@ export default function FinancialInfoForm({ onSubmit }: FinancialInfoFormProps) 
             type="text"
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
-            placeholder="예: 8000만원"
+            placeholder="예: 8000 (만원 단위)"
             required
             className="focus:ring-2 focus:ring-accent focus:border-transparent"
           />
+          <p className="text-xs text-gray-500 mt-1">만원 단위로 입력해주세요 (예: 8000)</p>
         </div>
 
         <div>
@@ -90,10 +106,11 @@ export default function FinancialInfoForm({ onSubmit }: FinancialInfoFormProps) 
             type="text"
             value={cash}
             onChange={(e) => setCash(e.target.value)}
-            placeholder="예: 2억원"
+            placeholder="예: 3 (억원 단위)"
             required
             className="focus:ring-2 focus:ring-accent focus:border-transparent"
           />
+          <p className="text-xs text-gray-500 mt-1">억원 단위로 입력해주세요 (예: 3)</p>
         </div>
 
         <div>
