@@ -1,0 +1,101 @@
+아래는 사용자가 업로드하신 5개의 CSV 파일 각각에 대해 “테이블 헤더(컬럼명)”과 “각 컬럼이 담고 있는 정보(데이터 구조)”를 요약한 내용입니다.
+
+⸻
+
+1. stage3_overview_results.csv
+
+개요: 네이버·KB 등에서 ‘단지 개요(Overview)’를 크롤링한 결과로, 아파트 단지의 기본 메타데이터와 대표 거래가를 담고 있습니다.
+
+컬럼명	타입	내용 설명
+complexNo	Integer	단지 고유번호 (ID)
+complexName	String	단지명
+dong_name	String	행정동 명
+sigungu	String	시·군·구 명
+detailAddress	String	도로명·지번 등 상세 주소
+useApproveYmd	String	사용승인일 (YYYYMMDD)
+totalHouseHoldCount	Integer	단지 전체 세대수
+totalDongCount	Integer	단지 동(棟) 수
+realPrice_floor	Float	최근 거래가 최저가 (해당 단지 최저층 기준, 만원 단위)
+realPrice_representativeArea	Float	최근 거래가 (표준 면적 기준, 만원 단위)
+realPrice_exclusiveArea	Float	최근 거래가 (전용 면적 기준, 만원 단위)
+…	…	기타 overview용 컬럼 (예: 주변 인프라 지표 등)
+
+
+⸻
+
+2. stage4_baseinfo_results.csv
+
+개요: 단지별 주소·위치·기본 속성 등을 크롤링해 둔 ‘기본 정보(Base Info)’ 시트입니다.
+
+컬럼명	타입	내용 설명
+complexno	Integer	단지 고유번호 (stage3의 complexNo와 매칭)
+location	String	주소 전체 문자열
+city	String	시 단위 (예: “서울특별시”)
+gu	String	구 단위 (예: “강남구”)
+dong	String	동 단위 (예: “역삼동”)
+detail	String	상세 주소 (도로명, 번지 등)
+latitude	Float	위도
+longitude	Float	경도
+…	…	기타 물리적 속성 (예: 건축 연도, 총 세대수 재기록 등)
+
+
+⸻
+
+3. stage5_keyinfo_results.csv
+
+개요: 단지별 핵심 시세·전세·갭·전고점 정보 등 ‘Key Info’를 크롤링한 시트입니다.
+
+컬럼명	타입	내용 설명
+complexNo	Integer	단지 고유번호
+transactionType	String	거래 구분 (“매매” / “전세”)
+exclusiveArea	Float	전용면적 (㎡)
+pyeong	Float	전용면적(㎡)를 평(畳) 단위로 환산
+lowFloorPrice	Integer	최저층 매매가 또는 전세가 (만원 단위)
+salePrice	Integer	최근 매매가 (만원 단위)
+leasePrice	Integer	최근 전세가 (만원 단위)
+gap	Integer	갭(매매가 – 전세가, 만원 단위)
+leaseRate	Float	전세가율(%) = 전세가 ÷ 매매가 × 100
+recentSale	String	최근 거래 일자 (YYYY-MM)
+highestPrice	Integer	단지 과거 최고가 (만원 단위)
+changeFromPeak	Float	과거 고점 대비 회복률(%) = 최근 시세 ÷ 최고가 × 100
+…	…	기타 key info (예: 실거래 건수, 거래량 등)
+
+
+⸻
+
+4. apt_complex_price_list_seoul_filtered.csv
+
+개요: 서울시 아파트 단지 중 필터링된(예산 범위·거래량 등 조건 적용) 가격 리스트.
+
+컬럼명	타입	내용 설명
+complexNo	Integer	단지 고유번호
+salePrice	Float	최근 실제 거래가 (억원 단위)
+highestPrice	Float	과거 최고 거래가 (억원 단위)
+changeFromPeak	Float	과거 고점 대비 현재 회복률(%)
+avgPrice	Float	(선택) 해당 단지 평균 거래가 (억원 단위)
+priceDate	String	(선택) 해당 가격이 집계된 기준월 (YYYY-MM)
+…	…	기타 필터링 기준 컬럼(예: 거래량, 전세가율 등)
+
+
+⸻
+
+5. apt_list.csv
+
+개요: 아파트 단지 목록 및 행정동 정보를 간단히 나열한 기본 리스트.
+
+컬럼명	타입	내용 설명
+dong_name	String	아파트 소재 행정동
+apt_name	String	아파트 단지명
+(추가)	…	(선택) 시군구, 시도 등 추가 행정구역 정보
+
+
+⸻
+
+요약 및 활용
+	•	stage3_overview → 단지 기본 메타 + 최근 거래가
+	•	stage4_baseinfo → 단지 주소·위치 정보
+	•	stage5_keyinfo → 핵심 시세·전세·갭·전고점 데이터
+	•	price_list_seoul_filtered → 서울시 대상 필터링된 가격 지표
+	•	apt_list → 단지명·행정동 매핑
+
+위 구조를 바탕으로 데이터베이스 스키마를 설계하거나, AI Agent 프롬프트 내에서 “이 컬럼을 참조해서 OOO를 계산해 줘” 식으로 지시하실 수 있습니다. 추가로 컬럼별 예시값이나 파일 간 조인 키(complexNo, dong_name+apt_name) 등에 대해 질문이 있으시면 알려주세요!
