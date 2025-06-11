@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(352, 100%, 70%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(174, 62%, 47%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(201, 85%, 60%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Custom theme colors */
+  --warm-bg: hsl(350, 100%, 97%);
+  --chat-bg: hsl(220, 13%, 97%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(352, 100%, 70%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(174, 62%, 47%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --accent: hsl(201, 85%, 60%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-korean antialiased bg-chat-bg text-foreground;
+  }
+}
+
+@layer components {
+  .font-korean {
+    font-family: 'Noto Sans KR', 'Inter', sans-serif;
+  }
+  
+  .font-english {
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  }
+
+  .bg-primary {
+    background-color: hsl(352, 100%, 70%);
+  }
+
+  .bg-secondary {
+    background-color: hsl(174, 62%, 47%);
+  }
+
+  .bg-accent {
+    background-color: hsl(201, 85%, 60%);
+  }
+
+  .bg-warm-bg {
+    background-color: var(--warm-bg);
+  }
+
+  .bg-chat-bg {
+    background-color: var(--chat-bg);
+  }
+
+  .text-primary {
+    color: hsl(352, 100%, 70%);
+  }
+
+  .text-secondary {
+    color: hsl(174, 62%, 47%);
+  }
+
+  .text-accent {
+    color: hsl(201, 85%, 60%);
+  }
+
+  .chat-bubble-user {
+    background: linear-gradient(135deg, hsl(201, 85%, 60%) 0%, hsl(174, 62%, 47%) 100%);
+  }
+
+  .chat-bubble-ai {
+    background: linear-gradient(135deg, hsl(352, 100%, 70%) 0%, hsl(352, 100%, 75%) 100%);
+  }
+
+  .premium-blur {
+    filter: blur(4px);
+    transition: filter 0.3s ease;
+  }
+
+  .premium-blur:hover {
+    filter: blur(2px);
+  }
+
+  .premium-card .premium-blur {
+    filter: blur(2px);
+  }
+}
+
+@layer utilities {
+  .animate-bounce-in {
+    animation: bounce-in 0.6s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.4s ease-out;
+  }
+
+  .animate-typing {
+    animation: typing 1.4s infinite;
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0.3);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes typing {
+    0%, 60% {
+      opacity: 1;
+    }
+    30% {
+      opacity: 0.4;
+    }
+    90% {
+      opacity: 0.8;
+    }
+  }
+}
